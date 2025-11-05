@@ -5,7 +5,7 @@ import { db } from "../config/db.js"
 
 export async function listarAvaliacoes (req, res) {
     try {
-        const [rows] = await db.query(`
+        const [rows] = await db.execute(`
             SELECT a.id, a.nota, a.comentario, u.nome AS usuario_nome, l.titulo AS livro_titulo
             FROM avaliacoes a
             JOIN usuarios u ON a.usuario_id = u.id
@@ -28,7 +28,7 @@ export async function criarAvaliacao (req, res) {
         }
         await db.execute(
             "INSERT INTO avaliacoes (usuario_id, livro_id, nota, comentario) VALUES (?, ?, ?, ?)",
-            [usuario_id, livro_id, nota, comentario]
+            [usuario_id, livro_id, nota, comentario]          
         );
         res.json({ mensagem: "Avaliação criada com sucesso!" });
     } catch (err) {
