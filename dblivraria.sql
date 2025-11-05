@@ -84,3 +84,62 @@ VALUES
 (1, 4, 5.0, 'Leitura obrigatória para todo desenvolvedor.'),
 (2, 3, 3.5, 'Ideia interessante, mas um pouco confusa em alguns trechos.'),
 (3, 5, 4.8, 'Um clássico atemporal, narrativa impecável.');
+
+-- ===========================================================
+-- TABELA DE RESERVAS
+-- ===========================================================
+CREATE TABLE IF NOT EXISTS reservas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    livro_id INT NOT NULL,
+    data_retirada DATE NOT NULL,
+    data_devolucao DATE NOT NULL,
+    confirmado_email BOOLEAN DEFAULT FALSE,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (livro_id) REFERENCES livros(id) ON DELETE CASCADE
+);
+
+-- ===========================================================
+-- DADOS DE AVALIAÇÕES
+-- ===========================================================
+INSERT INTO reservas (usuario_id, livro_id, data_retirada, data_devolucao, confirmado_email)
+VALUES
+(1, 3, '2025-10-20', '2025-11-03', TRUE),
+(2, 1, '2025-10-25', '2025-11-08', FALSE),
+(3, 5, '2025-10-10', '2025-10-24', TRUE),
+(4, 2, '2025-11-01', '2025-11-15', FALSE),
+(5, 4, '2025-10-28', '2025-11-11', TRUE),
+(1, 2, '2025-11-03', '2025-11-17', FALSE),
+(3, 1, '2025-11-02', '2025-11-16', TRUE),
+(2, 4, '2025-10-30', '2025-11-13', TRUE),
+(4, 5, '2025-10-22', '2025-11-05', FALSE),
+(5, 3, '2025-11-04', '2025-11-18', TRUE);
+
+-- ===========================================================
+-- TABELA DE RESERVAS
+-- ===========================================================
+CREATE TABLE IF NOT EXISTS favoritos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    livro_id INT NOT NULL,
+    data_favoritado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (livro_id) REFERENCES livros(id) ON DELETE CASCADE
+);
+-- ===========================================================
+-- DADOS DE AVALIAÇÕES
+-- ===========================================================
+INSERT INTO favoritos (usuario_id, livro_id, data_favoritado)
+VALUES
+(1, 2, '2025-10-05 10:23:45'),
+(1, 4, '2025-10-07 14:10:32'),
+(2, 1, '2025-10-08 09:45:12'),
+(2, 5, '2025-10-12 16:18:05'),
+(3, 3, '2025-10-10 11:22:33'),
+(3, 1, '2025-10-15 13:30:20'),
+(4, 2, '2025-10-20 18:42:55'),
+(4, 5, '2025-10-25 08:12:14'),
+(5, 4, '2025-10-28 19:05:01'),
+(5, 3, '2025-10-30 09:55:44');
+
