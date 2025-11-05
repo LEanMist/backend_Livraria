@@ -15,12 +15,12 @@ export async function listarAvaliacoes (req, res) {
 
 export async function criarAvaliacao (req, res) {
     try {
-        const { id_usuario, id_livro, nota, comentario } = req.body;
-        if (!id_usuario || !id_livro || !nota || !comentario)       
+        const { usuario_id, livro_id, nota, comentario } = req.body;
+        if (!usuario_id || !livro_id || !nota || !comentario)       
             return res.status(400).json({ erro: "Campos obrigatórios" });
         await db.execute(
-            "INSERT INTO avaliacoes (id_usuario, id_livro, nota, comentario) VALUES (?, ?, ?, ?)",
-            [id_usuario, id_livro, nota, comentario]
+            "INSERT INTO avaliacoes (usuario_id, livro_id, nota, comentario) VALUES (?, ?, ?, ?)",
+            [usuario_id, livro_id, nota, comentario]
         );
         res.json({ mensagem: "Avaliação criada com sucesso!" });
     } catch (err) {
