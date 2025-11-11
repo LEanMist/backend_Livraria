@@ -6,7 +6,7 @@ import { db } from "../config/db.js"
 export async function listarAvaliacoes (req, res) {
     try {
         const [rows] = await db.execute(`
-            SELECT a.id, a.nota, a.comentario, u.nome AS usuario_nome, l.titulo AS livro_titulo
+            SELECT a.id, u.nome AS usuario_nome, l.titulo AS livro_titulo, a.nota, a.comentario
             FROM avaliacoes a
             JOIN usuarios u ON a.usuario_id = u.id
             JOIN livros l ON a.livro_id = l.id

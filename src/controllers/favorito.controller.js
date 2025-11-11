@@ -6,7 +6,7 @@ import { db } from "../config/db.js"
 export async function listarFavoritos(req, res) {
     try {
         const [rows] = await db.execute(`
-            SELECT f.id, f.data_favoritado, u.nome AS usuario_nome, l.titulo AS livro_titulo
+            SELECT f.id, u.nome AS usuario_nome, l.titulo AS livro_titulo, f.data_favoritado
             FROM favoritos f
             JOIN usuarios u ON f.usuario_id = u.id
             JOIN livros l ON f.livro_id = l.id
@@ -24,8 +24,8 @@ export async function adicionarFavorito(req, res) {
         if (!usuario_id || !livro_id)       
             return res.status(400).json({ erro: "Campos obrigatórios" });
         await db.execute(
-            "INSERT INTO avaliacoes (usuario_id, livro_id) VALUES (?, ?)",
-            [usuario_id, livro_id, nota, comentario]
+            "INSERT INTO favoritos (usuario_id, livro_id) VALUES (?, ?)",
+            [usuario_id, livro_id]
         );
         res.json({ mensagem: "Adicionado aos Favoritos!👌" });
     } catch (err) {
